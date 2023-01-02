@@ -1,10 +1,11 @@
 package main
 
 import (
-	"log"
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 )
 
 func main() {
@@ -25,7 +26,8 @@ func main() {
 	// Post Data
 	router.POST("/post", postHandler)
 
-	router.Run(":8181")
+	// run port
+	router.Run(":8282")
 }
 
 // root Index
@@ -55,10 +57,10 @@ func queryHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"title": title, "judul": judul})
 }
 
-// POST DATA
+// POST DATA & JSON Validation & Show Error
 type Post struct {
-	Title string
-	Harga int
+	Title string      `json:"title" binding:"required"`
+	Harga interface{} `json:"harga" binding:"required,number"`
 }
 
 func postHandler(c *gin.Context) {
@@ -66,11 +68,30 @@ func postHandler(c *gin.Context) {
 	err := c.ShouldBindJSON(&postInput)
 
 	if err != nil {
-		log.Fatal(err)
+
+		// 	// jika pakai log ini yang ini akan exit secara automatic
+		// 	// log.Fatal(err)
+
+		// 	// handling & show error json
+		// 	// c.JSON(http.StatusBadRequest, err)
+		// 	// fmt.Println(err)
+		// 	// return
+
+		errorMessages := []string{}
+		for _, e := range err.(validator.ValidationErrors) {
+			errorMessage := fmt.Sprintf("Error on field %s, conditon: %s", e.Field(), e.ActualTag())
+			errorMessages = append(errorMessages, errorMessage)
+
+		}
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": errorMessages,
+		})
+		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
 		"title": postInput.Title,
 		"harga": postInput.Harga,
 	})
+
 }
