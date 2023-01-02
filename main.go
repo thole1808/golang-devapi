@@ -10,11 +10,13 @@ func main() {
 	router := gin.Default()
 
 	// buatlah route anda masing - masing sesuai kebutuhan
-	router.GET("/", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"data": "null",
-		})
-	})
+	router.GET("/", rootHandler)
 
-	router.Run()
+	router.Run(":8181")
+}
+
+func rootHandler(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{
+		"data": "null",
+	})
 }
