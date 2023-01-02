@@ -8,3 +8,8 @@ Golang Rest API
 4. buatlah file main.go di project anda untuk kebutuhan menjalankan aplikasi go.
 5. kemudian runing program anda dengan ketikan script ini di terminal anda :
    - go run main.go    
+
+
+
+NOTE :
+- Setiap ada perubahan dari script harap run start kembali dengan ketikan script tersebut => go run main.go
