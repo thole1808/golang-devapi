@@ -16,12 +16,14 @@ func main() {
 	router.Run(":8181")
 }
 
+// root Index
 func rootHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"data": "null",
 	})
 }
 
+// Get ID
 func getIdHandler(c *gin.Context) {
 	id := c.Param("id")
 	c.JSON(http.StatusOK, gin.H{"id": id})
