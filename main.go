@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -20,6 +21,9 @@ func main() {
 
 	// Get Query
 	router.GET("/query", queryHandler)
+
+	// Post Data
+	router.POST("/post", postHandler)
 
 	router.Run(":8181")
 }
@@ -49,4 +53,24 @@ func queryHandler(c *gin.Context) {
 	title := c.Query("title")
 	judul := c.Query("judul")
 	c.JSON(http.StatusOK, gin.H{"title": title, "judul": judul})
+}
+
+// POST DATA
+type Post struct {
+	Title string
+	Harga int
+}
+
+func postHandler(c *gin.Context) {
+	var postInput Post
+	err := c.ShouldBindJSON(&postInput)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"title": postInput.Title,
+		"harga": postInput.Harga,
+	})
 }
