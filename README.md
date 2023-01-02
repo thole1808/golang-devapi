@@ -1,5 +1,5 @@
 # golang-devapi
-Golang Rest API
+Golang Rest API Gin-Gonic
 =================
 1. Buat folder untuk project anda.
 2. ketikan script ini di terminal anda untuk menampung modules2 anda -> go get -u github.com/    gin-gonic/gin 
