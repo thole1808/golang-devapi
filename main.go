@@ -9,6 +9,7 @@ import (
 
 var Database *gorm.DB
 
+// tester
 func main() {
 	router := gin.Default()
 
