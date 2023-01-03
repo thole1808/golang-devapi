@@ -13,6 +13,7 @@ import (
 
 var Database *gorm.DB
 
+// tester
 func main() {
 
 	// Koneksi Ke Database PostgresSQL
